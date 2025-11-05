@@ -6,33 +6,11 @@ We present an optimized implementation of 5-limb field multiplication suitable f
 
 1. Introduction:
 Finite field multiplication is a fundamental operation in elliptic curve cryptography and post-quantum schemes. Traditional “schoolbook” multiplication involves 
-𝑂
-(
-𝑛
-2
-)
-O(n
-2
-) limb-level multiplications, while Karatsuba reduces the number of multiplications asymptotically. However, naive implementations may suffer from excessive memory overhead and suboptimal instruction-level performance.
+𝑂(𝑛^2) limb-level multiplications, while Karatsuba reduces the number of multiplications asymptotically. However, naive implementations may suffer from excessive memory overhead and suboptimal instruction-level performance.
 
 2. Methodology:
 
-Karatsuba Optimization: We compute 17 intermediate products 
-𝑝
-1
-.
-.
-𝑝
-14
-p
-1
-	​
-
-..p
-14
-	​
-
- corresponding to limb combinations. Common subexpressions (S1 = p1 + p3, S3 = p10 - p8) are reused in multiple coefficient calculations to reduce redundant arithmetic.
+Karatsuba Optimization: We compute 14 intermediate products corresponding to limb combinations. Common subexpressions (S1 = p1 + p3, S3 = p10 - p8) are reused in multiple coefficient calculations to reduce redundant arithmetic.
 
 Carry Propagation Without Temporaries: Coefficients c0..c8 are directly propagated into the output limbs, eliminating the need for a temporary array t[] and minimizing memory accesses.
 
@@ -204,3 +182,4 @@ int main() {
 
     return 0;
 }
+
